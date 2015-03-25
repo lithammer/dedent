@@ -1,5 +1,7 @@
 # Dedent
 
+[![Build Status](https://travis-ci.org/renstrom/dedent.svg?branch=master)](https://travis-ci.org/renstrom/dedent)
+
 Removes common leading whitespace from multiline strings. Inspired by [`textwrap.dedent`](https://docs.python.org/3/library/textwrap.html#textwrap.dedent) in Python.
 
 ## Usage / example
