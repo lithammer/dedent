@@ -1,6 +1,9 @@
 package dedent
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestFindMargin(t *testing.T) {
 	m := findMargin("Foo\n\t\t\tBar\n\t\tBaz")
@@ -32,6 +35,18 @@ fermentum vitae ligula. Sed eu convallis sapien.
 	if Dedent(s1) != s2 {
 		t.Errorf("expected string '%s'; got '%s'", s2, Dedent(s1))
 	}
+}
+
+func ExampleDedent() {
+	fmt.Println(Dedent(`Lorem ipsum dolor sit amet,
+		consectetur adipiscing elit.
+		Curabitur justo tellus, facilisis nec efficitur dictum,
+		fermentum vitae ligula. Sed eu convallis sapien.`))
+	// Output:
+	// Lorem ipsum dolor sit amet,
+	// consectetur adipiscing elit.
+	// Curabitur justo tellus, facilisis nec efficitur dictum,
+	// fermentum vitae ligula. Sed eu convallis sapien.
 }
 
 func BenchmarkDedent(b *testing.B) {
