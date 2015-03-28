@@ -37,6 +37,50 @@ fermentum vitae ligula. Sed eu convallis sapien.
 	}
 }
 
+func TestDedentJSONString(t *testing.T) {
+	s1 := `
+		{
+			"key1": [
+				"l1",
+				"l2"
+			],
+			"key2": "value"
+		}`
+
+	s2 := `
+{
+	"key1": [
+		"l1",
+		"l2"
+	],
+	"key2": "value"
+}`
+
+	if Dedent(s1) != s2 {
+		t.Errorf("expected string '%s'; got '%s'", s2, Dedent(s1))
+	}
+
+	s3 := `{
+			"key1": [
+				"l1",
+				"l2"
+			],
+			"key2": "value"
+		}`
+
+	s4 := `{
+	"key1": [
+		"l1",
+		"l2"
+	],
+	"key2": "value"
+}`
+
+	if Dedent(s3) != s4 {
+		t.Errorf("expected string '%s'; got '%s'", s2, Dedent(s1))
+	}
+}
+
 func ExampleDedent() {
 	fmt.Println(Dedent(`Lorem ipsum dolor sit amet,
 		consectetur adipiscing elit.
