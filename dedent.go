@@ -8,11 +8,11 @@ import (
 var whitespaceOnly = regexp.MustCompile("(?m)^[ \t]+$")
 var leadingWhitespace = regexp.MustCompile("(?m)(^[ \t]*)")
 
-// Remove any common leading whitespace from every line in `s`.
+// Dedent removes any common leading whitespace from every line in s.
 //
-// This can be used to make multiline strings line up with the left
-// edge of the display, while still presenting them in the source code
-// in indented form.
+// This can be used to make multiline strings to line up with the left edge of
+// the display, while still presenting them in the source code in indented
+// form.
 func Dedent(s string) string {
 	s = whitespaceOnly.ReplaceAllString(s, "")
 	margin := findMargin(s)
