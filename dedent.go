@@ -5,45 +5,35 @@ import (
 	"strings"
 )
 
-var whitespaceOnly = regexp.MustCompile("(?m)^[ \t]+$")
-var leadingWhitespace = regexp.MustCompile("(?m)(^[ \t]*)")
+var (
+	whitespaceOnly    = regexp.MustCompile("(?m)^[ \t]+$")
+	leadingWhitespace = regexp.MustCompile("(?m)(^[ \t]*)(?:[^ \t\n])")
+)
 
-// Dedent removes any common leading whitespace from every line in s.
+// Dedent removes any common leading whitespace from every line in text.
 //
 // This can be used to make multiline strings to line up with the left edge of
 // the display, while still presenting them in the source code in indented
 // form.
-func Dedent(s string) string {
-	s = whitespaceOnly.ReplaceAllString(s, "")
-	margin := findMargin(s)
-	if len(margin) == 0 {
-		return s
-	}
-	return regexp.MustCompile("(?m)^"+margin).ReplaceAllString(s, "")
-}
-
-// Look for the longest leading string of spaces and tabs common to all lines.
-func findMargin(s string) string {
+func Dedent(text string) string {
 	var margin string
 
-	indents := leadingWhitespace.FindAllString(s, -1)
-	numIndents := len(indents)
-	for i, indent := range indents {
-		// Don't use last row if it is empty
-		if i == numIndents-1 && indent == "" {
-			break
-		}
+	text = whitespaceOnly.ReplaceAllString(text, "")
+	indents := leadingWhitespace.FindAllStringSubmatch(text, -1)
 
-		if margin == "" {
-			margin = indent
-		} else if strings.HasPrefix(indent, margin) {
+	// Look for the longest leading string of spaces and tabs common to all
+	// lines.
+	for i, indent := range indents {
+		if i == 0 {
+			margin = indent[1]
+		} else if strings.HasPrefix(indent[1], margin) {
 			// Current line more deeply indented than previous winner:
 			// no change (previous winner is still on top).
 			continue
-		} else if strings.HasPrefix(margin, indent) {
+		} else if strings.HasPrefix(margin, indent[1]) {
 			// Current line consistent with and no deeper than previous winner:
 			// it's the new winner.
-			margin = indent
+			margin = indent[1]
 		} else {
 			// Current line and previous winner have no common whitespace:
 			// there is no margin.
@@ -52,5 +42,8 @@ func findMargin(s string) string {
 		}
 	}
 
-	return margin
+	if margin != "" {
+		text = regexp.MustCompile("(?m)^"+margin).ReplaceAllString(text, "")
+	}
+	return text
 }
