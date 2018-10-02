@@ -148,16 +148,25 @@ func TestDedentPreserveMarginTabs(t *testing.T) {
 }
 
 func ExampleDedent() {
-	fmt.Println(Dedent(`
+	s := `
 		Lorem ipsum dolor sit amet,
 		consectetur adipiscing elit.
 		Curabitur justo tellus, facilisis nec efficitur dictum,
-		fermentum vitae ligula. Sed eu convallis sapien.`))
+		fermentum vitae ligula. Sed eu convallis sapien.`
+	fmt.Println(Dedent(s))
+	fmt.Println("-------------")
+	fmt.Println(s)
 	// Output:
 	// Lorem ipsum dolor sit amet,
 	// consectetur adipiscing elit.
 	// Curabitur justo tellus, facilisis nec efficitur dictum,
 	// fermentum vitae ligula. Sed eu convallis sapien.
+	// -------------
+	//
+	//		Lorem ipsum dolor sit amet,
+	//		consectetur adipiscing elit.
+	//		Curabitur justo tellus, facilisis nec efficitur dictum,
+	//		fermentum vitae ligula. Sed eu convallis sapien.
 }
 
 func BenchmarkDedent(b *testing.B) {
