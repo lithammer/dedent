@@ -13,19 +13,20 @@ Imagine the following snippet that prints a multiline string. You want the inden
 package main
 
 import (
-    "fmt"
+	"fmt"
 
-    "github.com/lithammer/dedent"
+	"github.com/lithammer/dedent"
 )
 
 func main() {
-    s := `Lorem ipsum dolor sit amet,
-        consectetur adipiscing elit.
-        Curabitur justo tellus, facilisis nec efficitur dictum,
-        fermentum vitae ligula. Sed eu convallis sapien.`
-    fmt.Println(dedent.Dedent(s))
-    fmt.Println("-------------")
-    fmt.Println(s)
+	s := `
+		Lorem ipsum dolor sit amet,
+		consectetur adipiscing elit.
+		Curabitur justo tellus, facilisis nec efficitur dictum,
+		fermentum vitae ligula. Sed eu convallis sapien.`
+	fmt.Println(Dedent(s))
+	fmt.Println("-------------")
+	fmt.Println(s)
 }
 ```
 
@@ -39,10 +40,11 @@ consectetur adipiscing elit.
 Curabitur justo tellus, facilisis nec efficitur dictum,
 fermentum vitae ligula. Sed eu convallis sapien.
 -------------
-Lorem ipsum dolor sit amet,
-        consectetur adipiscing elit.
-        Curabitur justo tellus, facilisis nec efficitur dictum,
-        fermentum vitae ligula. Sed eu convallis sapien.
+
+		Lorem ipsum dolor sit amet,
+		consectetur adipiscing elit.
+		Curabitur justo tellus, facilisis nec efficitur dictum,
+		fermentum vitae ligula. Sed eu convallis sapien.
 ```
 
 ## License
