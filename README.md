@@ -24,7 +24,7 @@ func main() {
 		consectetur adipiscing elit.
 		Curabitur justo tellus, facilisis nec efficitur dictum,
 		fermentum vitae ligula. Sed eu convallis sapien.`
-	fmt.Println(Dedent(s))
+	fmt.Println(dedent.Dedent(s))
 	fmt.Println("-------------")
 	fmt.Println(s)
 }
