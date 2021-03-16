@@ -45,5 +45,10 @@ func Dedent(text string) string {
 	if margin != "" {
 		text = regexp.MustCompile("(?m)^"+margin).ReplaceAllString(text, "")
 	}
+
+	if text[0] == '\n' && text[len(text)-1] == '\n' {
+		text = text[1 : len(text)-1]
+	}
+
 	return text
 }
