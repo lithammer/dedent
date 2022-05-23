@@ -65,8 +65,7 @@ func TestDedentUneven(t *testing.T) {
 				while 1:
 					return foo
 			`,
-			expect: `
-def foo():
+			expect: `def foo():
 	while 1:
 		return foo
 `,
@@ -153,10 +152,12 @@ func ExampleDedent() {
 		consectetur adipiscing elit.
 		Curabitur justo tellus, facilisis nec efficitur dictum,
 		fermentum vitae ligula. Sed eu convallis sapien.`
+	fmt.Println("-------------")
 	fmt.Println(Dedent(s))
 	fmt.Println("-------------")
 	fmt.Println(s)
 	// Output:
+	// -------------
 	// Lorem ipsum dolor sit amet,
 	// consectetur adipiscing elit.
 	// Curabitur justo tellus, facilisis nec efficitur dictum,
