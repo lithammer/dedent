@@ -1,1 +1,1 @@
-module github.com/lithammer/dedent
+module github.com/marhar/dedent/v2.0
