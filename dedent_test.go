@@ -65,11 +65,9 @@ func TestDedentUneven(t *testing.T) {
 				while 1:
 					return foo
 			`,
-			expect: `
-def foo():
+			expect: `def foo():
 	while 1:
-		return foo
-`,
+		return foo`,
 		},
 		{
 			// Uneven indentation with a blank line
@@ -141,6 +139,39 @@ func TestDedentPreserveMarginTabs(t *testing.T) {
 	}
 
 	for _, text := range texts2 {
+		if text.expect != Dedent(text.text) {
+			t.Errorf(errorMsg, text.expect, Dedent(text.text))
+		}
+	}
+}
+
+// Dedent() should remove the first and last newline if it starts and ends with a newline
+func TestDedentRemoveSurroundingNewLines(t *testing.T) {
+	texts := []dedentTest{
+		{
+			text: `
+				hello there
+				how are you?
+			`,
+			expect: "hello there\nhow are you?",
+		},
+		{
+			text: `
+
+				hello there
+				how are you?
+			`,
+			expect: "\nhello there\nhow are you?",
+		},
+		{
+			text: `
+				hello there
+				how are you?`,
+			expect: "\nhello there\nhow are you?",
+		},
+	}
+
+	for _, text := range texts {
 		if text.expect != Dedent(text.text) {
 			t.Errorf(errorMsg, text.expect, Dedent(text.text))
 		}
