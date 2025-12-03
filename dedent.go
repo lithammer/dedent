@@ -22,9 +22,13 @@ func Dedent(text string) string {
 	indents := leadingWhitespace.FindAllStringSubmatch(text, -1)
 
 	// Look for the longest leading string of spaces and tabs common to all
-	// lines.
+	// lines, except first non-indented lines.
+	firstIndentedLine := 0
 	for i, indent := range indents {
-		if i == 0 {
+		if i == firstIndentedLine && indent[1] == "" {
+			// no indent in first line, ignore it
+			firstIndentedLine = 1
+		} else if i == firstIndentedLine {
 			margin = indent[1]
 		} else if strings.HasPrefix(indent[1], margin) {
 			// Current line more deeply indented than previous winner:
