@@ -6,6 +6,7 @@ import (
 )
 
 var (
+	leadingNewline    = regexp.MustCompile("^[\n]")
 	whitespaceOnly    = regexp.MustCompile("(?m)^[ \t]+$")
 	leadingWhitespace = regexp.MustCompile("(?m)(^[ \t]*)(?:[^ \t\n])")
 )
@@ -18,6 +19,7 @@ var (
 func Dedent(text string) string {
 	var margin string
 
+	text = leadingNewline.ReplaceAllString(text, "")
 	text = whitespaceOnly.ReplaceAllString(text, "")
 	indents := leadingWhitespace.FindAllStringSubmatch(text, -1)
 
